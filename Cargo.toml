@@ -1,5 +1,6 @@
 [package]
 name = "pretty-bytes-rust"
+description = "Rust library that takes a number that represent a byte and returns a string that is prettier to read for a human"
 version = "0.1.0"
 edition = "2021"
 authors = ["Patrick Desjardins <mrdesjardins@gmail.com>"]

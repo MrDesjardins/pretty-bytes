@@ -22,8 +22,8 @@ use std::cmp;
 /// # Examples
 /// ```rust
 /// use pretty_bytes_rust::pretty_bytes;
-/// let r1 = pretty_bytes(1024 * 1024 * 5 + 512, None);
-/// assert_eq!(r1, "5.00 MB");
+/// let r1 = pretty_bytes(1024 * 1024 * 5 + 50000, None);
+/// assert_eq!(r1, "5.05 MB");
 /// 
 /// ```
 /// 

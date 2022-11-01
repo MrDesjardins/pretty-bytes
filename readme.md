@@ -1,10 +1,10 @@
-# Humanify Duration
+# Pretty Bytes - Humanify Bytes for Easy Read
 
-[<img alt="github" src="https://img.shields.io/badge/github-mrdesjardins/pretty_bytes-8dagcb?labelColor=555555&logo=github" height="20">](https://github.com/MrDesjardins/pretty-bytes)
-[<img alt="crates.io" src="https://img.shields.io/crates/v/pretty_bytes_rust.svg?color=fc8d62&logo=rust" height="20">](https://crates.io/crates/pretty-bytes)
-[<img alt="docs.rs" src="https://img.shields.io/badge/docs.pretty_bytes-66c2a5?labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/pretty-bytes-rust/latest/pretty-duration)
-[![CI Build](https://github.com/MrDesjardins/pretty-bytes/actions/workflows/rust.yml/badge.svg)](https://github.com/MrDesjardins/pretty-bytes/actions/workflows/rust.yml)
-[![codecov](https://codecov.io/gh/MrDesjardins/pretty-bytes/branch/main/graph/badge.svg?token=TWHYC1X1KQ)](https://codecov.io/gh/MrDesjardins/pretty-bytes)
+[<img alt="github" src="https://img.shields.io/badge/github-mrdesjardins/pretty_bytes_rust-8dagcb?labelColor=555555&logo=github" height="20">](https://github.com/MrDesjardins/pretty-bytes-rust)
+[<img alt="crates.io" src="https://img.shields.io/crates/v/pretty_bytes_rust.svg?color=fc8d62&logo=rust" height="20">](https://crates.io/crates/pretty-bytes-rust)
+[<img alt="docs.rs" src="https://img.shields.io/badge/docs.pretty_bytes-66c2a5?labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/pretty-bytes-rust/latest/pretty-bytes-rust)
+[![CI Build](https://github.com/MrDesjardins/pretty-bytes-rust/actions/workflows/rust.yml/badge.svg)](https://github.com/MrDesjardins/pretty-bytes-rust/actions/workflows/rust.yml)
+[![codecov](https://codecov.io/gh/MrDesjardins/pretty-bytes-rust/branch/main/graph/badge.svg?token=TWHYC1X1KQ)](https://codecov.io/gh/MrDesjardins/pretty-bytes-rust)
 
 Rust library that takes a number that represent a byte and returns a string that is prettier to read for a human
 
@@ -13,7 +13,7 @@ Rust library that takes a number that represent a byte and returns a string that
 ## Install
 
 ```sh
-cargo add pretty-bytes
+cargo add pretty-bytes-rust
 ```
 
 ## How to use?
@@ -21,56 +21,26 @@ cargo add pretty-bytes
 ### Without Configuration Option
 
 ```rust
-use pretty_duration::pretty_duration;
-use std::time::Duration;
-let result = pretty_duration(&Duration::from_millis(31556956789), None);
-// result: 1 year 11 months 109 days 5 hours 49 minutes 16 seconds 789 milliseconds
+use pretty_bytes_rust::pretty_bytes;
+let r1 = pretty_bytes(1024 * 1024 * 5 + 512, None);
+assert_eq!(r1, "5.00 MB");
 ```
 
-### With Configuration Option - Language
+### With Configuration Option - Specifying Decimal Precision
 
 ```rust
-use pretty_duration::pretty_duration;
-use std::time::Duration;
-let result = pretty_duration(
-    &Duration::from_millis(31556956789),
-    Some(PrettyDurationOptions {
-        output_format: Some(PrettyDurationOutputFormat::Expanded),
-        singular_labels: Some(PrettyDurationLabels {
-            year: "année",
-            month: "mois", // Not the `s` here in singular form
-            day: "jour",
-            hour: "heure",
-            minute: "minute",
-            second: "seconde",
-            millisecond: "milliseconde",
-        }),
-        plural_labels: Some(PrettyDurationLabels {
-            year: "années",
-            month: "mois",
-            day: "jours",
-            hour: "heures",
-            minute: "minutes",
-            second: "secondes",
-            millisecond: "millisecondes",
-        }),
+use pretty_bytes_rust::pretty_bytes;
+let result = pretty_bytes(
+    1024 * 1024 * 3,
+    Some(PrettyBytesOptions {
+        use_1024_instead_of_1000: Some(false),
+        number_of_decimal: Some(3),
+        remove_zero_decimal: Some(false),
     }),
 );
-// result: "1 année 11 mois 109 jours 5 heures 49 minutes 16 secondes 789 millisecondes
+assert_eq!(result, "3.146 MB");
 ```
 
-### With Configuration Option - Compact
-```rust
-let result = pretty_duration(
-    &Duration::from_millis(31556956789),
-    Some(PrettyDurationOptions {
-        output_format: Some(PrettyDurationOutputFormat::Compact),
-        singular_labels: None,
-        plural_labels: None,
-    }),
-);
-//  result: "1y 11mon 109d 5h 49m 16s 789ms");
-```
 # As a Developer of the Library
 
 ## What to Install?

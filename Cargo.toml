@@ -1,0 +1,17 @@
+[package]
+name = "pretty-bytes-rust"
+version = "0.1.0"
+edition = "2021"
+authors = ["Patrick Desjardins <mrdesjardins@gmail.com>"]
+homepage = "https://github.com/MrDesjardins/pretty-bytes"
+repository = "https://github.com/MrDesjardins/pretty-bytes"
+license = "Apache-2.0"
+keywords = ["pretty-bytes", "size", "format-bytes", "number-format", "format-number"]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dev-dependencies]
+criterion = "0.4.0"
+
+[[bench]]
+name = "benchmark"
+harness = false

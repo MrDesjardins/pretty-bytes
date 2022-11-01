@@ -2,7 +2,7 @@
 
 [<img alt="github" src="https://img.shields.io/badge/github-mrdesjardins/pretty_bytes_rust-8dagcb?labelColor=555555&logo=github" height="20">](https://github.com/MrDesjardins/pretty-bytes-rust)
 [<img alt="crates.io" src="https://img.shields.io/crates/v/pretty_bytes_rust.svg?color=fc8d62&logo=rust" height="20">](https://crates.io/crates/pretty-bytes-rust)
-[<img alt="docs.rs" src="https://img.shields.io/badge/docs.pretty_bytes-66c2a5?labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/pretty-bytes-rust/latest/pretty-bytes-rust)
+[<img alt="docs.rs" src="https://img.shields.io/badge/docs.pretty_bytes-66c2a5?labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/pretty-bytes-rust/latest/pretty_bytes_rust)
 [![CI Build](https://github.com/MrDesjardins/pretty-bytes-rust/actions/workflows/rust.yml/badge.svg)](https://github.com/MrDesjardins/pretty-bytes-rust/actions/workflows/rust.yml)
 [![codecov](https://codecov.io/gh/MrDesjardins/pretty-bytes-rust/branch/main/graph/badge.svg?token=TWHYC1X1KQ)](https://codecov.io/gh/MrDesjardins/pretty-bytes-rust)
 

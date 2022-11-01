@@ -16,6 +16,30 @@ Rust library that takes a number that represent a byte and returns a string that
 cargo add pretty-bytes-rust
 ```
 
+# Consumer of the CLI
+
+You can pass the byte with `-b`
+
+```sh
+pretty-bytes-rust -b 2000
+```
+
+You can see all the options:
+
+```sh
+pretty-bytes-rust --help
+```
+
+You can pipe the number of byte
+```sh
+echo "2000" | pretty-bytes-rust 
+```
+
+You can pipe and still use options
+```sh
+echo "2000" | pretty-bytes-rust -n 6 
+```
+
 ## How to use?
 
 ### Without Configuration Option
@@ -97,6 +121,9 @@ Further explanation in the [Mozilla grcov website](https://github.com/mozilla/gr
 ```sh
 cargo doc --open
 ```
+## Testing CLI
+
+All commands for the user works but instead of using `pretty-bytes-rust -n 12345` you need to use `cargo run -- -n 12345`
 
 # Benchmark
 
@@ -104,7 +131,7 @@ cargo doc --open
 cargo bench
 ```
 
-## Publishing
+# Publishing
 
 ```sh
 cargo login

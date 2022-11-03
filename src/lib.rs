@@ -66,10 +66,10 @@ pub fn pretty_bytes(bytes: u64, options: Option<PrettyBytesOptions>) -> String {
 }
 
 fn get_unit_index(bytes: f64, delimiter: f64, max_units_index: i32) -> i32 {
-    return cmp::min(
+    cmp::min(
         ((bytes as f64).ln() / delimiter.ln()).floor() as i32,
         max_units_index as i32,
-    );
+    )
 }
 
 fn get_string(
@@ -92,23 +92,20 @@ fn get_string(
 
 fn set_default_options(user_options: Option<PrettyBytesOptions>) -> PrettyBytesOptionWithDefault {
     // Ensure if we the user passed nothing that we have a type with all options with no value
-    let output_format = user_options.unwrap_or_else(|| PrettyBytesOptions {
+    let output_format = user_options.unwrap_or(PrettyBytesOptions {
         use_1024_instead_of_1000: None,
         number_of_decimal: None,
         remove_zero_decimal: None,
     });
 
     // Give default value to all options not defined by the user
-    let default_options = PrettyBytesOptionWithDefault {
+    PrettyBytesOptionWithDefault {
         use_1024_instead_of_1000: output_format
             .use_1024_instead_of_1000
-            .unwrap_or_else(|| true),
-        number_of_decimal: output_format.number_of_decimal.unwrap_or_else(|| 2),
-        remove_zero_decimal: output_format.remove_zero_decimal.unwrap_or_else(|| false),
-    };
-
-    // Return all configurations with user first, then default value when not specified
-    return default_options;
+            .unwrap_or(true),
+        number_of_decimal: output_format.number_of_decimal.unwrap_or(2),
+        remove_zero_decimal: output_format.remove_zero_decimal.unwrap_or(false),
+    }
 }
 #[cfg(test)]
 mod test_set_default_options {

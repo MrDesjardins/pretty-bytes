@@ -64,3 +64,15 @@ fn pretty_bytes_option4() {
     );
     assert_eq!(r2, "8.39 MB");
 }
+
+#[test]
+fn pretty_bytes_64bits() {
+    let r2 = pretty_bytes(18446744071562067968, None);
+    assert_eq!(r2, "16.00 EB");
+}
+
+#[test]
+fn pretty_bytes_zero() {
+    let r2 = pretty_bytes(0, None);
+    assert_eq!(r2, "0.00 B");
+}

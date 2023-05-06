@@ -10,13 +10,12 @@ pub use crate::pretty_bytes_lib::PrettyBytesOptions;
 use crate::pretty_bytes_lib::{PrettyBytesOptionWithDefault, BIT_UNITS, BYTE_UNITS};
 use std::cmp;
 
-
 /// pretty_bytes main function that convert bytes into a pretty format that is easier
 /// to read for a humain
-/// 
+///
 /// # Arguments
 /// The first argument is the number of bytes to transform
-/// 
+///
 /// The second argument is the option. Can be set to `None` to use the default of 2 decimals and 1024 bytes per unit
 ///  
 /// # Examples
@@ -24,9 +23,9 @@ use std::cmp;
 /// use pretty_bytes_rust::pretty_bytes;
 /// let r1 = pretty_bytes(1024 * 1024 * 5 + 50000, None);
 /// assert_eq!(r1, "5.05 MB");
-/// 
+///
 /// ```
-/// 
+///
 /// ```rust
 /// use pretty_bytes_rust::pretty_bytes;
 /// use pretty_bytes_rust::PrettyBytesOptions;
@@ -36,7 +35,7 @@ use std::cmp;
 ///           remove_zero_decimal: Some(false)
 ///        }));
 /// assert_eq!(r2, "9.437 MB");
-/// ``` 
+/// ```
 pub fn pretty_bytes(bytes: u64, options: Option<PrettyBytesOptions>) -> String {
     let options_with_default = set_default_options(options);
 
@@ -66,8 +65,16 @@ pub fn pretty_bytes(bytes: u64, options: Option<PrettyBytesOptions>) -> String {
 }
 
 fn get_unit_index(bytes: f64, delimiter: f64, max_units_index: i32) -> i32 {
+    println!("Bytes {}", bytes as f64);
+    println!("Delimiter {}", delimiter);
+    println!("Bytes log {}", (bytes as f64).ln());
+    println!("Delimeter log {}", delimiter.ln());
+    let mut bytes_log = (bytes as f64).ln();
+    if bytes_log < 0.0 {
+        bytes_log = 0.0;
+    }
     cmp::min(
-        ((bytes as f64).ln() / delimiter.ln()).floor() as i32,
+        (bytes_log / delimiter.ln()).floor() as i32,
         max_units_index as i32,
     )
 }
@@ -100,9 +107,7 @@ fn set_default_options(user_options: Option<PrettyBytesOptions>) -> PrettyBytesO
 
     // Give default value to all options not defined by the user
     PrettyBytesOptionWithDefault {
-        use_1024_instead_of_1000: output_format
-            .use_1024_instead_of_1000
-            .unwrap_or(true),
+        use_1024_instead_of_1000: output_format.use_1024_instead_of_1000.unwrap_or(true),
         number_of_decimal: output_format.number_of_decimal.unwrap_or(2),
         remove_zero_decimal: output_format.remove_zero_decimal.unwrap_or(false),
     }
@@ -133,7 +138,11 @@ mod test_set_default_options {
 #[cfg(test)]
 mod test_get_unit_index {
     use super::*;
-
+    #[test]
+    fn test_get_unit_0() {
+        let result = get_unit_index(0_f64, 1024_f64, 9);
+        assert_eq!(result, 0)
+    }
     #[test]
     fn test_get_unit_1024_index_1023() {
         let result = get_unit_index(1023_f64, 1024_f64, 9);

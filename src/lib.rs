@@ -65,10 +65,10 @@ pub fn pretty_bytes(bytes: u64, options: Option<PrettyBytesOptions>) -> String {
 }
 
 fn get_unit_index(bytes: f64, delimiter: f64, max_units_index: i32) -> i32 {
-    println!("Bytes {}", bytes as f64);
-    println!("Delimiter {}", delimiter);
-    println!("Bytes log {}", (bytes as f64).ln());
-    println!("Delimeter log {}", delimiter.ln());
+    // println!("Bytes {}", bytes as f64);
+    // println!("Delimiter {}", delimiter);
+    // println!("Bytes log {}", (bytes as f64).ln());
+    // println!("Delimiter log {}", delimiter.ln());
     let mut bytes_log = (bytes as f64).ln();
     if bytes_log < 0.0 {
         bytes_log = 0.0;

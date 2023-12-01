@@ -65,6 +65,23 @@ let result = pretty_bytes(
 assert_eq!(result, "3.146 MB");
 ```
 
+### With Configuration Option - 1024 instead of 1000
+
+```rust
+
+```rust
+use pretty_bytes_rust::pretty_bytes;
+let result = pretty_bytes(
+    1024 * 1024 * 3,
+    Some(PrettyBytesOptions {
+        use_1024_instead_of_1000: Some(true),
+        number_of_decimal: Some(3),
+        remove_zero_decimal: Some(false),
+    }),
+);
+assert_eq!(result, "3.146 MB");
+```
+
 # As a Developer of the Library
 
 ## What to Install?

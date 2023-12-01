@@ -10,7 +10,7 @@ fn pretty_bytes_no_option1() {
 #[test]
 fn pretty_bytes_no_option2() {
     let result = pretty_bytes(1024, None);
-    assert_eq!(result, "1.00 kB");
+    assert_eq!(result, "1.00 kbit");
 }
 
 #[test]
@@ -23,7 +23,7 @@ fn pretty_bytes_option1() {
             remove_zero_decimal: None,
         }),
     );
-    assert_eq!(result, "3.000 MB");
+    assert_eq!(result, "3.000 Mbit");
 }
 
 #[test]
@@ -36,7 +36,7 @@ fn pretty_bytes_option2() {
             remove_zero_decimal: Some(true),
         }),
     );
-    assert_eq!(result, "3 MB");
+    assert_eq!(result, "3 Mbit");
 }
 
 #[test]
@@ -68,7 +68,7 @@ fn pretty_bytes_option4() {
 #[test]
 fn pretty_bytes_64bits() {
     let r2 = pretty_bytes(18446744071562067968, None);
-    assert_eq!(r2, "16.00 EB");
+    assert_eq!(r2, "16.00 Ebit");
 }
 
 #[test]

@@ -19,13 +19,15 @@ use std::cmp;
 /// The second argument is the option. Can be set to `None` to use the default of 2 decimals and 1024 bytes per unit
 ///  
 /// # Examples
+/// ## Example without option (default)
 /// ```rust
 /// use pretty_bytes_rust::pretty_bytes;
 /// let r1 = pretty_bytes(1024 * 1024 * 5 + 50000, None);
-/// assert_eq!(r1, "5.05 MB");
+/// assert_eq!(r1, "5.05 Mbit");
 ///
 /// ```
 ///
+/// ## Example with options to false
 /// ```rust
 /// use pretty_bytes_rust::pretty_bytes;
 /// use pretty_bytes_rust::PrettyBytesOptions;
@@ -35,6 +37,17 @@ use std::cmp;
 ///           remove_zero_decimal: Some(false)
 ///        }));
 /// assert_eq!(r2, "9.437 MB");
+/// ```
+/// ## Example with options to true
+/// ```rust
+/// use pretty_bytes_rust::pretty_bytes;
+/// use pretty_bytes_rust::PrettyBytesOptions;
+/// let r2 = pretty_bytes(1024 * 1024 * 9 + 123, Some(PrettyBytesOptions {
+///           use_1024_instead_of_1000: Some(true),
+///           number_of_decimal: Some(3),
+///           remove_zero_decimal: Some(true)
+///        }));
+/// assert_eq!(r2, "9.000 Mbit");
 /// ```
 pub fn pretty_bytes(bytes: u64, options: Option<PrettyBytesOptions>) -> String {
     let options_with_default = set_default_options(options);
@@ -60,7 +73,7 @@ pub fn pretty_bytes(bytes: u64, options: Option<PrettyBytesOptions>) -> String {
         options_with_default.number_of_decimal,
         options_with_default.remove_zero_decimal,
     );
-    let unit = BYTE_UNITS[index as usize];
+    let unit = units[index as usize];
     format!("{} {}", pretty_bytes, unit)
 }
 
@@ -179,30 +192,36 @@ mod test_get_string {
         let result = get_string(1023_f64, 1024_f64, 0, 2, false);
         assert_eq!(result, "1023.00")
     }
-
     #[test]
     fn test_get_string_bytes_remove_decimal() {
         let result = get_string(1023_f64, 1024_f64, 0, 2, true);
         assert_eq!(result, "1023")
     }
-
     #[test]
     fn test_get_string_kilobytes() {
         let result = get_string(1024_f64, 1024_f64, 1, 2, false);
         assert_eq!(result, "1.00")
     }
     #[test]
+    fn test_get_string_kilobytes2() {
+        let result = get_string(1024_f64 * 1024_f64 * 9_f64 + 123_f64, 1024_f64, 1, 3, true);
+        assert_eq!(result, "9216.120")
+    }
+    #[test]
+    fn test_get_string_kilobytes3() {
+        let result = get_string(1024_f64 * 1024_f64 * 9_f64 + 123_f64, 1000_f64, 1, 3, true);
+        assert_eq!(result, "9437.307")
+    }
+    #[test]
     fn test_get_string_kilobytes_remove_decimal() {
         let result = get_string(1024_f64, 1024_f64, 1, 2, true);
         assert_eq!(result, "1")
     }
-
     #[test]
     fn test_get_string_kilobytes_no_even() {
         let result = get_string(1100_f64, 1024_f64, 1, 2, false);
         assert_eq!(result, "1.07")
     }
-
     #[test]
     fn test_get_string_kilobytes_no_even_remove_decimal() {
         let result = get_string(1100_f64, 1024_f64, 1, 2, true);

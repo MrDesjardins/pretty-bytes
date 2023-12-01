@@ -1,7 +1,7 @@
-use atty::Stream;
 use clap::Parser;
 use pretty_bytes_rust::{pretty_bytes, PrettyBytesOptions};
 use std::io::stdin;
+use std::io::IsTerminal;
 use std::process;
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)] // Read from `Cargo.toml`
@@ -19,7 +19,7 @@ struct Cli {
 fn main() {
     let args = Cli::parse();
     let my_bytes: u64;
-    if atty::is(Stream::Stdin) {
+    if std::io::stdin().is_terminal() {
         my_bytes = args.bytes.unwrap();
     } else {
         let mut input = String::new();
